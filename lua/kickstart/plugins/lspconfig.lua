@@ -157,7 +157,22 @@ return {
       --   for type, icon in pairs(signs) do
       --     diagnostic_signs[vim.diagnostic.severity[type]] = icon
       --   end
-      --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      vim.diagnostic.config {
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.INFO] = '',
+            [vim.diagnostic.severity.HINT] = '',
+          },
+          numhl = {
+            [vim.diagnostic.severity.WARN] = 'WarningMsg',
+            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+            [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
+            [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
+          },
+        },
+      }
       -- end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -200,7 +215,10 @@ return {
                 callSnippet = 'Replace',
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = {
+                globals = { 'love' },
+                disable = { 'missing-fields' },
+              },
             },
           },
         },
